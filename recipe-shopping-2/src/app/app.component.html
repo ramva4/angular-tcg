@@ -1,0 +1,9 @@
+<app-header (menuSelectionChange)="switchView($event)" [currentSelection]="currentSelection"></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <app-shopping-list *ngIf="currentSelection === 'shopping'"></app-shopping-list>
+      <app-recipe-book *ngIf="currentSelection === 'recipe'"></app-recipe-book>
+    </div>
+  </div>
+</div>
