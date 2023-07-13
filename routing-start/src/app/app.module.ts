@@ -51,7 +51,12 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    
+    
     RouterModule.forRoot(appRoutes)
+
+    /* To disable (modern) HTML History Mode and enable # mode */
+    // RouterModule.forRoot(appRoutes, {useHash: true})
   ],
   providers: [ServersService, AuthGuard, AuthService, CanDeactivateGuard, ServerResolver],
   bootstrap: [AppComponent]
