@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="myFormGroup" (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" formControlName="username">
+          <span class="help-block" *ngIf="!myFormGroup.get('username').valid && myFormGroup.get('username').touched">
+            <span class="help-block" *ngIf="myFormGroup.get('username').errors['blacklistedUsername']">Blacklisted
+              username</span>
+            <span class="help-block" *ngIf="myFormGroup.get('username').errors['required']">Username is
+              mandatory</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" formControlName="email">
+          <div *ngIf="myFormGroup.get('email').status !== 'PENDING'">
+            <span *ngIf="!myFormGroup.get('email').valid && myFormGroup.get('email').touched">
+              <small class="help-block" *ngIf="myFormGroup.get('email').errors['emailValidationFailure']">That email ID
+                is disallowed</small>
+                <small class="help-block" *ngIf="myFormGroup.get('email').errors['email']">Invalid email ID</small>
+                <small class="help-block" *ngIf="myFormGroup.get('email').errors['required']">Email ID is mandatory</small>  
+            </span>
+          </div>
+        </div>
+        <div formGroupName="address">
+          <div class="form-group">
+            <label for="line1">Address Line 1</label>
+            <input type="text" id="line1" class="form-control" formControlName="line1">
+            <span class="help-block"
+              *ngIf="!myFormGroup.get('address.line1').valid && myFormGroup.get('address.line1').touched">Address line 1
+              is mandatory</span>
+          </div>
+          <div class="form-group">
+            <label for="line2">Address Line 2</label>
+            <input type="text" id="line2" class="form-control" formControlName="line2">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="radio" *ngFor="let gender of genders">
+            <label>
+              <input type="radio" [value]="gender" formControlName="gender">{{ gender }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <h4>Hobbies</h4>
+          <button class="btn btn-secondary" type="button" (click)="addHobby()">Add Hobby</button>
+          <div formArrayName="hobbies">
+            <input *ngFor="let hobbyControl of getHobbyControls(); let ind = index" type="text" id="hobby"
+              class="form-control" [formControlName]="ind">
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!myFormGroup.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
