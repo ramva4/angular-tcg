@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <small class="helper-block">{{ "abc" | reverse }}</small>
+      <div class="form-group">
+        <label for="filter">Filter</label>
+        <input id="filter" type="text" class="form-control"
+          [(ngModel)]="filterPattern">
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let server of servers | filter:'status':filterPattern | sort:'instanceType'"
+          [ngClass]="getStatusClasses(server)">
+          <span class="badge">
+            {{ server.status | uppercase | reverse }}
+          </span>
+          <strong>{{ server.name | shorten:10 }}</strong> | {{ server.instanceType
+          }} | {{ server.started }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
