@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "./recipe.model";
+import { Subject } from "rxjs";
 
-@Injectable()
+//@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipeService {
+    recipesChanged = new Subject<Recipe[]>();
     private recipes: Recipe[] = [
         new Recipe('Paneer Tikka',
             'Grilled paneer, tomato and capsicum straight from the tandoor',
@@ -24,5 +27,24 @@ export class RecipeService {
     getRecipe(idx: number) {
         /* Ideally we should clone this object using Object.assign() and return the clone */
         return this.recipes[idx];
+    }
+
+    addRecipe(recipe: Recipe) {
+        this.recipes.push(recipe);
+        this.notifyChange();
+    }
+
+    delRecipe(idx: number) {
+        this.recipes.splice(idx, 1);
+        this.recipesChanged.next(this.getRecipes());
+    }
+
+    updateRecipe(idx: number, recipe: Recipe) {
+        this.recipes[idx] = recipe;
+        this.notifyChange();
+    }
+
+    private notifyChange() {
+        this.recipesChanged.next(this.getRecipes());
     }
 }
