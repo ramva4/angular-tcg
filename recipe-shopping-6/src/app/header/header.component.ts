@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import { ServerAccessService } from '../shared/server-access.service';
+import { StorageAccessService } from '../shared/storage-access.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  providers: [ServerAccessService]
 })
 export class HeaderComponent {
-  constructor(private serverAccessService: ServerAccessService) { }
+  constructor(private serverAccessService: StorageAccessService) { }
 
   onSaveData() {
     this.serverAccessService.saveRecipes();
   }
 
   onFetchData() {
-    this.serverAccessService.fetchRecipes();
+    this.serverAccessService.fetchRecipes().subscribe();
   }
 }
